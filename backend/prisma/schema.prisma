@@ -1,0 +1,86 @@
+// database
+datasource db {
+  provider = "postgresql"
+  url      = "postgresql://postgres:JSu7ro56e9RJUotw@192.168.100.7:5432/evgeniy"
+}
+
+// generator
+generator client {
+  provider             = "prisma-client-js"
+  // generate    = "true" // раскомментируйте, если хотите генерировать Prisma Client при запуске
+  // output        = "../src/prisma/prisma-client/"
+  // binaryTargets = ["native", "rhel-openssl-1.0.x"]
+  recursive_type_depth = 5
+}
+
+enum UserRoles {
+  USER
+  ADMIN
+}
+
+enum LogType {
+  INFO
+  WARNING
+  ERROR
+}
+
+enum TaskStatus {
+  PENDING_FOR_GENERATION
+  GENERATED
+  POSTED
+  FAILED
+}
+
+enum HealthStatus {
+  HEALTHY
+  WARNING
+  CRITICAL
+}
+
+enum StatusReason {
+  CANT_SEND_POSTS
+  CHANNEL_NOT_FOUND
+}
+
+model Users {
+  id               Int             @id @default(autoincrement())
+  telegram_id      Int             @unique
+  config           Json            @default("{}")
+  first_name       String?
+  last_name        String?
+  username         String?
+  tg_api           String?         @unique
+  role             UserRoles       @default(USER)
+  end_subscription DateTime?
+
+  channels         Channel[]       @relation("user_channel")
+  updatedAt        DateTime        @updatedAt
+  createdAt        DateTime        @default(now())
+}
+
+model Channel {
+  id                Int            @id @default(autoincrement())
+  user              Users          @relation("user_channel", fields: [user_id], references: [id])
+  user_id           Int
+  channel_name      String?
+  channel_id        Int            @unique
+  username          String
+  config            Json           @default("{}")
+  posts             Channel_post[] @relation("channel_channelpost")
+  status            HealthStatus   @default(HEALTHY)
+  reason            StatusReason?
+  updatedAt         DateTime       @updatedAt
+  createdAt         DateTime       @default(now())
+}
+
+model Channel_post {
+  id                Int            @id @default(autoincrement())
+  channel           Channel        @relation("channel_channelpost", fields: [channel_id], references: [id])
+  channel_id        Int
+  time              DateTime
+  text              String?      
+  photo             String?
+  status            TaskStatus     @default(PENDING_FOR_GENERATION)
+  updatedAt         DateTime       @updatedAt
+  createdAt         DateTime       @default(now())
+}

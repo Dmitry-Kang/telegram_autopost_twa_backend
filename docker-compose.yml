@@ -1,0 +1,16 @@
+version: '3'
+services:
+  backend:
+    image: node:latest
+    working_dir: /app
+    volumes:
+      - ./backend:/app
+    command: npm run start2
+    # entrypoint: ["tail", "-f", "/dev/null"]
+    env_file:
+      - .env
+    ports:
+      - "7778:7778"
+
+volumes:
+  postgres_data:
