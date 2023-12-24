@@ -1,129 +1,131 @@
-const taskProps = require('../properties/taskProps');
-const taskService = require('../services/taskService');
+const userProps = require('../properties/userProps');
+const userService = require('../services/userService');
 
 module.exports = function (fastify) {
-
-  // test
-  fastify.put('/test', {
+  // authorize
+  fastify.post('/authorize', {
     schema: {
-      description: 'Get user tasks',
-      tags: ['task'],
-      summary: 'Get accounts with tasks to execute',
+      description: 'authorize request',
+      tags: ['user'],
+      summary: 'authorize request',
       body: {
         type: 'object',
-        properties: taskProps.baltazarRequest,
-        required: ['message'],
+        properties: userProps.authorizeRequest,
+        required: ['telegram_id'],
       },
       response: {
         200: {
           description: 'Successful response',
           type: 'object',
-          properties: taskProps.baltazarResponse,
+          properties: userProps.authorizeResponse,
         },
         400: {
           description: 'Failure response',
           type: 'object',
-          properties: taskProps.responseError,
+          properties: userProps.responseError,
         }
       },
     },
   }, async (req, reply) => {
-    const { message } = req.body
     try {
-      return await taskService.getTest(message)
+      const { telegram_id } = req.body
+
+      return await userService.authorize(telegram_id)
     } catch(e) {
       reply.code(400)
       return { message:`${e.message} ${e.stack}` }
     }
   })
 
-  // test2
-  fastify.get('/test2', {
+  // get all
+  fastify.get('/user', {
     schema: {
-      description: 'test2',
-      tags: ['task'],
-      summary: 'test2',
+      description: 'Get all users',
+      tags: ['user'],
       response: {
         200: {
           description: 'Successful response',
           type: 'object',
-          properties: taskProps.getTasksResponse,
+          properties: userProps.getAllResponse,
         },
         400: {
           description: 'Failure response',
           type: 'object',
-          properties: taskProps.responseError,
+          properties: userProps.responseError,
         }
       },
     },
   }, async (req, reply) => {
-
     try {
-      return await taskService.getTest2()
+      return await userService.getAll()
     } catch(e) {
       reply.code(400)
       return { message:`${e.message} ${e.stack}` }
     }
   })
 
-  // check ai tasks
-  fastify.get('/check', {
+  // get one
+  fastify.get('/user/:id', {
     schema: {
-      description: 'Check ai tasks',
-      tags: ['task'],
-      summary: 'Check ai tasks',
+      description: 'Get user by id',
+      tags: ['user'],
+      params: {
+        type: 'object',
+        properties: { id: { type: "string" } },
+        required: ['id'],
+      },
       response: {
         200: {
           description: 'Successful response',
           type: 'object',
-          properties: taskProps.checkAiTasksResponse,
+          properties: userProps.getOneResponse,
         },
         400: {
           description: 'Failure response',
           type: 'object',
-          properties: taskProps.responseError,
+          properties: userProps.responseError,
         }
       },
     },
   }, async (req, reply) => {
-
     try {
-      return await taskService.checkTasks()
+      const accountId = req.params.id
+
+      return await userService.getOne(accountId)
     } catch(e) {
       reply.code(400)
       return { message:`${e.message} ${e.stack}` }
     }
-  }),
+  })
 
-  // baltazar
-  fastify.put('/baltazar', {
+  // edit user
+  fastify.patch('/user', {
     schema: {
-      description: 'baltazar request',
-      tags: ['task'],
-      summary: 'baltazar request',
+      description: 'Edit user',
+      tags: ['user'],
       body: {
         type: 'object',
-        properties: taskProps.baltazarRequest,
-        required: ['message'],
+        properties: userProps.editRequest,
+        required: ['telegram_id'],
       },
       response: {
         200: {
           description: 'Successful response',
           type: 'object',
-          properties: taskProps.baltazarResponse,
+          properties: userProps.editResponse,
         },
         400: {
           description: 'Failure response',
           type: 'object',
-          properties: taskProps.responseError,
+          properties: userProps.responseError,
         }
       },
     },
   }, async (req, reply) => {
     try {
-      const { message } = req.body
+      const { tg_id, config, first_name, last_name, username, tg_api } = req.body
 
-      return await taskService.putBaltazar(message)
+      return await userService.edit(tg_id, config, first_name, last_name, username, tg_api)
     } catch(e) {
       reply.code(400)
       return { message:`${e.message} ${e.stack}` }

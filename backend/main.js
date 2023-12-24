@@ -34,12 +34,22 @@ const start = async () => {
           })
           
           // Routes
-          const taskRoutes = require('./routes/taskRoute')
-          taskRoutes(fastify)
+          const userRoutes = require('./routes/userRoute')
+          userRoutes(fastify)
+          const channelRoutes = require('./routes/channelRoute')
+          channelRoutes(fastify)
+          const postRoutes = require('./routes/postRoute')
+          postRoutes(fastify)
 
-          console.log(`Server is running at ${process.env.BACKEND_CLIENT_PORT}`)
-          fastify.listen({ port: process.env.BACKEND_CLIENT_PORT, host:"0.0.0.0" }, err => {
+          console.log(`Server is running at ${3000}`)
+          fastify.listen({ port: 3000, host:"0.0.0.0" }, err => {
             if (err) throw err
+
+            // регулярные функции
+            setInterval(() => {
+              console.log("sus")
+              // yourFunctionToRunEvery10Minutes();
+            }, 10000); 
           });
           
     } catch (err) {
