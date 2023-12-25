@@ -32,11 +32,11 @@ module.exports = {
 	// edit user
 	editRequest: {
     telegram_id: { type: 'number' },
-		config: { type: 'object', additionalProperties: true }, // todo доделать
-		first_name: { type: 'string' },
-		last_name: { type: 'string' },
-		username: { type: 'string' },
-		tg_api: { type: 'string' },
+    config: { type: 'object', additionalProperties: true }, // todo доделать
+    first_name: { type: 'string' },
+    last_name: { type: 'string' },
+    username: { type: 'string' },
+    tg_api: { type: 'string' },
 	},
 
 	editResponse: {

@@ -12,7 +12,7 @@ module.exports = {
 
       if (!newUser) {
         newUser = await prisma.users.create({
-          where: {
+          data: {
             telegram_id
           }
         })
@@ -20,8 +20,8 @@ module.exports = {
 
       return { message: "Success" , data: newUser};
     } catch(e) {
-      console.error('Error', error);
-      throw error;
+      console.error('Error', e);
+      throw e;
     }
   },
 
@@ -32,8 +32,8 @@ module.exports = {
 
       return { message: "Success" , data: allUsers};
     } catch(e) {
-      console.error('Error', error);
-      throw error;
+      console.error('Error', e);
+      throw e;
     }
   },
 
@@ -48,8 +48,8 @@ module.exports = {
 
       return { message: "Success" , data: elem};
     } catch(e) {
-      console.error('Error', error);
-      throw error;
+      console.error('Error', e);
+      throw e;
     }
   },
 
@@ -68,8 +68,8 @@ module.exports = {
 
       return { message: "Success" , data: user};
     } catch(e) {
-      console.error('Error', error);
-      throw error;
+      console.error('Error', e);
+      throw e;
     }
   },
 }

@@ -6,6 +6,7 @@ module.exports = function (fastify) {
   fastify.post('/channel', {
     schema: {
       description: 'Create channel',
+      summary: 'Create channel',
       tags: ['channel'],
       body: {
         type: 'object',
@@ -40,6 +41,7 @@ module.exports = function (fastify) {
   fastify.get('/channel', {
     schema: {
       description: 'Get all channels',
+      summary: 'Get all channels',
       tags: ['channel'],
       response: {
         200: {
@@ -67,6 +69,7 @@ module.exports = function (fastify) {
   fastify.get('/channel/:id', {
     schema: {
       description: 'Get channel by id',
+      summary: 'Get channel by id',
       tags: ['channel'],
       params: {
         type: 'object',
@@ -90,7 +93,7 @@ module.exports = function (fastify) {
     try {
       const id = req.params.id
 
-      return await channelService.getOne(id)
+      return await channelService.getOne(Number(id))
     } catch(e) {
       reply.code(400)
       return { message:`${e.message} ${e.stack}` }
@@ -101,6 +104,7 @@ module.exports = function (fastify) {
   fastify.patch('/channel', {
     schema: {
       description: 'Edit channel',
+      summary: 'Edit channel',
       tags: ['channel'],
       body: {
         type: 'object',
@@ -135,6 +139,7 @@ module.exports = function (fastify) {
   fastify.delete('/channel/:id', {
     schema: {
       description: 'Delete channel by id',
+      summary: 'Delete channel by id',
       tags: ['channel'],
       params: {
         type: 'object',
@@ -158,7 +163,7 @@ module.exports = function (fastify) {
     try {
       const id = req.params.id
 
-      return await channelService.delete(id)
+      return await channelService.delete(Number(id))
     } catch(e) {
       reply.code(400)
       return { message:`${e.message} ${e.stack}` }

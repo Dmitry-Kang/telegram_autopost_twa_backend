@@ -63,7 +63,7 @@ model Channel {
   user              Users          @relation("user_channel", fields: [user_id], references: [id])
   user_id           Int
   channel_name      String?
-  channel_id        Int            @unique
+  channel_id        String            @unique
   config            Json           @default("{}")
   posts             Channel_post[] @relation("channel_channelpost")
   status            HealthStatus   @default(HEALTHY)

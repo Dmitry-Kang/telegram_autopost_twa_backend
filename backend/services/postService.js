@@ -6,14 +6,14 @@ module.exports = {
     toCreateObj = Object.fromEntries(Object.entries(toCreateObj).filter(([_, v]) => v !== undefined))
 
     try {
-      const newPost = await prisma.channel.create({
+      const newPost = await prisma.channel_post.create({
         data: toCreateObj
       })
 
       return { message: "Success" , data: newPost};
     } catch(e) {
-      console.error('Error', error);
-      throw error;
+      console.error('Error', e);
+      throw e;
     }
   },
 
@@ -23,8 +23,8 @@ module.exports = {
 
       return { message: "Success" , data: allPosts};
     } catch(e) {
-      console.error('Error', error);
-      throw error;
+      console.error('Error', e);
+      throw e;
     }
   },
 
@@ -39,8 +39,8 @@ module.exports = {
 
       return { message: "Success" , data: elem};
     } catch(e) {
-      console.error('Error', error);
-      throw error;
+      console.error('Error', e);
+      throw e;
     }
   },
 
@@ -59,8 +59,8 @@ module.exports = {
 
       return { message: "Success" , data: post};
     } catch(e) {
-      console.error('Error', error);
-      throw error;
+      console.error('Error', e);
+      throw e;
     }
   },
 
@@ -75,8 +75,8 @@ module.exports = {
 
       return { message: "Success" , data: elem};
     } catch(e) {
-      console.error('Error', error);
-      throw error;
+      console.error('Error', e);
+      throw e;
     }
   },
 }

@@ -2,7 +2,7 @@ const prisma = require("../db");
 
 module.exports = {
   async create(user_id, channel_name, channel_id) {
-    let toCreateObj = {config, first_name, last_name, username, tg_api};
+    let toCreateObj = {user_id, channel_name, channel_id};
     toCreateObj = Object.fromEntries(Object.entries(toCreateObj).filter(([_, v]) => v !== undefined))
 
     try {
@@ -12,8 +12,8 @@ module.exports = {
 
       return { message: "Success" , data: newChannel};
     } catch(e) {
-      console.error('Error', error);
-      throw error;
+      console.error('Error', e);
+      throw e;
     }
   },
 
@@ -23,8 +23,8 @@ module.exports = {
 
       return { message: "Success" , data: allChannels};
     } catch(e) {
-      console.error('Error', error);
-      throw error;
+      console.error('Error', e);
+      throw e;
     }
   },
 
@@ -39,8 +39,8 @@ module.exports = {
 
       return { message: "Success" , data: elem};
     } catch(e) {
-      console.error('Error', error);
-      throw error;
+      console.error('Error', e);
+      throw e;
     }
   },
 
@@ -59,8 +59,8 @@ module.exports = {
 
       return { message: "Success" , data: channel};
     } catch(e) {
-      console.error('Error', error);
-      throw error;
+      console.error('Error', e);
+      throw e;
     }
   },
 
@@ -75,8 +75,8 @@ module.exports = {
 
       return { message: "Success" , data: elem};
     } catch(e) {
-      console.error('Error', error);
-      throw error;
+      console.error('Error', e);
+      throw e;
     }
   },
 }

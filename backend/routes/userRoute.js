@@ -41,6 +41,7 @@ module.exports = function (fastify) {
   fastify.get('/user', {
     schema: {
       description: 'Get all users',
+      summary: 'Get all users',
       tags: ['user'],
       response: {
         200: {
@@ -68,6 +69,7 @@ module.exports = function (fastify) {
   fastify.get('/user/:id', {
     schema: {
       description: 'Get user by id',
+      summary: 'Get user by id',
       tags: ['user'],
       params: {
         type: 'object',
@@ -91,7 +93,7 @@ module.exports = function (fastify) {
     try {
       const accountId = req.params.id
 
-      return await userService.getOne(accountId)
+      return await userService.getOne(Number(accountId))
     } catch(e) {
       reply.code(400)
       return { message:`${e.message} ${e.stack}` }
@@ -102,6 +104,7 @@ module.exports = function (fastify) {
   fastify.patch('/user', {
     schema: {
       description: 'Edit user',
+      summary: 'Edit user',
       tags: ['user'],
       body: {
         type: 'object',
@@ -123,9 +126,9 @@ module.exports = function (fastify) {
     },
   }, async (req, reply) => {
     try {
-      const { tg_id, config, first_name, last_name, username, tg_api } = req.body
+      const { telegram_id, config, first_name, last_name, username, tg_api } = req.body
 
-      return await userService.edit(tg_id, config, first_name, last_name, username, tg_api)
+      return await userService.edit(telegram_id, config, first_name, last_name, username, tg_api)
     } catch(e) {
       reply.code(400)
       return { message:`${e.message} ${e.stack}` }

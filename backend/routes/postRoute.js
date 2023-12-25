@@ -6,6 +6,7 @@ module.exports = function (fastify) {
   fastify.post('/post', {
     schema: {
       description: 'Create post',
+      summary: 'Create post',
       tags: ['post'],
       body: {
         type: 'object',
@@ -40,6 +41,7 @@ module.exports = function (fastify) {
   fastify.get('/post', {
     schema: {
       description: 'Get all posts',
+      summary: 'Get all posts',
       tags: ['post'],
       response: {
         200: {
@@ -67,6 +69,7 @@ module.exports = function (fastify) {
   fastify.get('/post/:id', {
     schema: {
       description: 'Get post by id',
+      summary: 'Get post by id',
       tags: ['post'],
       params: {
         type: 'object',
@@ -90,7 +93,7 @@ module.exports = function (fastify) {
     try {
       const id = req.params.id
 
-      return await postService.getOne(id)
+      return await postService.getOne(Number(id))
     } catch(e) {
       reply.code(400)
       return { message:`${e.message} ${e.stack}` }
@@ -101,11 +104,12 @@ module.exports = function (fastify) {
   fastify.patch('/post', {
     schema: {
       description: 'Edit post',
+      summary: 'Edit post',
       tags: ['post'],
       body: {
         type: 'object',
         properties: postProps.editRequest,
-        required: ['id', 'channel_id'],
+        required: ['id'],
       },
       response: {
         200: {
@@ -135,6 +139,7 @@ module.exports = function (fastify) {
   fastify.delete('/post/:id', {
     schema: {
       description: 'Delete post by id',
+      summary: 'Delete post by id',
       tags: ['post'],
       params: {
         type: 'object',
@@ -158,7 +163,7 @@ module.exports = function (fastify) {
     try {
       const id = req.params.id
 
-      return await postService.delete(id)
+      return await postService.delete(Number(id))
     } catch(e) {
       reply.code(400)
       return { message:`${e.message} ${e.stack}` }

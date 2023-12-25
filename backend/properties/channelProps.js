@@ -17,7 +17,7 @@ module.exports = {
 
 	createResponse: {
 		message: { type: 'string' },
-		data: { type: 'array', items: { type: 'object', additionalProperties: true }}, // todo доделать
+		data: { type: 'object', additionalProperties: true },// todo доделать
 	},
 
 	// get all

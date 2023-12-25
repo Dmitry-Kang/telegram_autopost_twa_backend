@@ -1,6 +1,7 @@
 const fastify = require('fastify')()
 const fastifySession = require('@fastify/session');
 const fastifyCookie = require('@fastify/cookie')
+const regularFunctions = require('./regularFunctions')
 
 const start = async () => {
     try {
@@ -46,8 +47,9 @@ const start = async () => {
             if (err) throw err
 
             // регулярные функции
-            setInterval(() => {
-              console.log("sus")
+            setInterval(async () => {
+              await regularFunctions.regularGeneratePosts()
+              await regularFunctions.postInTelegram()
               // yourFunctionToRunEvery10Minutes();
             }, 10000); 
           });
